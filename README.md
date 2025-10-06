@@ -12,4 +12,4 @@ Vieglākais veids, kā palaist projektu:
 5. Augšējā izvēlnē palaiž projektu ar zaļo bultu;
 6. Projekts palaižas pop-up konsolē.
 
-Nezināmu iemeslu dēļ dažreiz projekts pēc pirmreizējas palaišanas neparāda konsoli. Tādā gadījumā projekts ir atkārtoti jāpalaiž.
+Nezināmu iemeslu dēļ dažreiz projekts pēc palaišanas parāda konsoli, kurā programma neizpildās. Tādā gadījumā projekts ir atkārtoti jāpalaiž.
