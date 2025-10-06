@@ -303,12 +303,15 @@ namespace Application
                     .Last();
 
                 Console.WriteLine("Population count: " + validRoutes.Count + "; Base population ");
-                Console.WriteLine("Average fitness: " + existingPopulation.Average(i => i.fitness));
-                Console.WriteLine("Best fitness score: " + bestVariant.fitness);
-                Console.WriteLine("Worst fitness score: " + worstVariant.fitness);
+                Console.WriteLine("Average fitness of population: " + existingPopulation.Average(i => i.fitness));
+                Console.WriteLine("Best fitness score in population: " + bestVariant.fitness);
+                Console.WriteLine("Worst fitness score in population: " + worstVariant.fitness);
                 Console.WriteLine();
 
                 var watchOverall = System.Diagnostics.Stopwatch.StartNew();
+
+                double? previousAvgFitness = null;
+
                 while (existingPopulation.Count()>2)
                 {
                     existingPopulation = existingPopulation.OrderBy(x => x.fitness).ToList();
@@ -316,12 +319,8 @@ namespace Application
                     List<Variant> new_population = new List<Variant>();
                     var halfList = existingPopulation.Take((existingPopulation.Count + 1) / 2).ToList();    //Get half of the population to crossover paths with better length
                     Shuffle(halfList);
-                    var watch = System.Diagnostics.Stopwatch.StartNew();
 
                     var children = CrossoverHelper.GenerateChildren(halfList, map, gen, possibleCities);
-
-                    watch.Stop();
-                    var elapsedMs = watch.ElapsedMilliseconds;
 
                     bestVariant = children
                     .OrderBy(ind => ind.fitness)
@@ -331,9 +330,18 @@ namespace Application
                     .OrderBy(ind => ind.fitness)
                     .Last();
 
-                    Console.WriteLine("Generation " + gen + "; Average fitness: " + children.Average(i => i.fitness) +  "; Calculation time in ms: " + elapsedMs);
-                    Console.WriteLine("Best fitness score: " + bestVariant.fitness);
-                    Console.WriteLine("Worst fitness score: " + worstVariant.fitness);
+                    bool hasAb = children.Any(x => x.route.Contains("ab")); //Check if ab comes one after another in any route
+                    var currentAvgFitness = children.Average(i => i.fitness);
+
+                    Console.WriteLine("Generation " + gen + "; Average fitness of population: " + currentAvgFitness);
+                    Console.WriteLine("Best fitness score in population: " + bestVariant.fitness);
+                    Console.WriteLine("Worst fitness score in population: " + worstVariant.fitness);
+                    Console.WriteLine("Contains ab: " + hasAb);
+                    if (previousAvgFitness.HasValue && currentAvgFitness > previousAvgFitness)
+                    {
+                        Console.WriteLine($"Population has a bigger average fitness ({currentAvgFitness}) than previous ({previousAvgFitness})");
+                    }
+                    previousAvgFitness = currentAvgFitness;
 
                     existingPopulation = children;
                     Console.WriteLine();
