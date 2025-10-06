@@ -279,10 +279,6 @@ namespace Application
                 List<Variant> existingPopulation = new List<Variant>();
                 Variant temp;
 
-                //string input = "abcde"; //Possible city names test case 1
-                //string input = "abcdefg"; //Possible city names test case 2
-                //string input = "abcdefghi"; //Possible city names test case 2
-
                 var allRoutes = GenerateAllRoutes(possibleCities); //Create TSP like routes
                 var validRoutes = FilterValidRoutes(allRoutes);
 
@@ -380,6 +376,7 @@ namespace Application
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
+
             //Map for test case 2
             int[,] map2 = new int[,]
         {
@@ -404,8 +401,8 @@ namespace Application
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
-            //Map for test case 3
 
+            //Map for test case 3
             int[,] map3 = new int[,]
             {
                 {  0, 29, 20, 21, 16, 31, 100, 12,  4 },
